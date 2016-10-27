@@ -1,8 +1,8 @@
 /////////////////////////////////////////////
-//NAME: Supakorn Wongsawang                  
-//ID: 5910500147                             
-//PROGRAM: findNum.cs                        
-//DATE: 21 Oct 2016                          
+//NAME: Supakorn Wongsawang
+//ID: 5910500147
+//PROGRAM: findNum.cs
+//DATE: 21 Oct 2016
 /////////////////////////////////////////////
 using System;
 class test
@@ -14,7 +14,6 @@ class test
 		string[] inppp = inpp.Split(' ');
 		int[] inp = new int[inppp.Length];
 		for(int i=0;i<inppp.Length;i++)inp[i] = Convert.ToInt32(inppp[i]);
-
 		Array.Sort(inp);
 		int[] digit = new int[10];
 		int[] tendigit = new int[10];
@@ -31,64 +30,36 @@ class test
 			Console.WriteLine("Input Error");
 			return 0;
 		}
-
-		bool haveans=false;
-		Console.Write("Digit = {");
-		string di ="";
-		for(int i=0;i<10;i++)
-		{
-			if(digit[i]>1)
-			{
-				string ans="";
-				ans = ans+" {";
-				for(int j=0;j<inp.Length;j++)if(inp[j]%10 == i)ans=ans+Convert.ToString(inp[j])+",";
-				ans=ans.Remove(ans.Length-1);
-				ans=ans+"} ,";
-				di=di+ans;
-				haveans=true;
-			}
-		}
-		if(haveans)di = di.Remove(di.Length-2,2);
-		Console.Write(di);
-		Console.WriteLine(" }");
-		haveans=false;
-		string hdi ="";
-		Console.Write("Ten Digit = {");
-		for(int i=0;i<10;i++)
-		{
-			if(tendigit[i]>1)
-			{
-				string ans="";
-				ans = ans+" {";
-				for(int j=0;j<inp.Length;j++)if(inp[j]%100/10 == i)ans=ans+Convert.ToString(inp[j])+",";
-				ans=ans.Remove(ans.Length-1);
-				ans=ans+"} ,";
-				hdi=hdi+ans;
-				haveans=true;
-			}
-		}
-		if(haveans)hdi = hdi.Remove(hdi.Length-2,2);
-		Console.Write(hdi);
-		Console.WriteLine(" }");
-		string hudi="";
-		haveans=false;
-		Console.Write("Hundred Digit = {");
-		for(int i=0;i<10;i++)
-		{
-			if(hundreddigit[i]>1)
-			{
-				string ans="";
-				ans = ans+" {";
-				for(int j=0;j<inp.Length;j++)if(inp[j]/100 == i)ans=ans+Convert.ToString(inp[j])+",";
-				ans=ans.Remove(ans.Length-1);
-				ans=ans+"} ,";
-				hudi=hudi+ans;
-				haveans=true;
-			}
-		}
-		if(haveans)hudi = hudi.Remove(hudi.Length-2,2);
-		Console.Write(hudi);
-		Console.WriteLine(" }");
-		return 0;
+        findnum(1, digit,inp);
+        findnum(10, tendigit,inp);
+        findnum(100, hundreddigit,inp);
+        return 0;
 	}
+    static void findnum(int what,int[] digit,int[] inp)
+    {
+        bool haveans = false;
+        int mod;
+        if (what == 1)  Console.Write("Digit = {");
+        else if (what == 10)  Console.Write("Ten Digit = {");
+        else if (what == 100)  Console.Write("Hundred Digit = {");
+        string di = "";
+        for (int i = 0; i < 10; i++)
+        {
+            if (digit[i] > 1)
+            {
+                string ans = " {";
+                for (int j = 0; j < inp.Length; j++)
+                {
+                    if (what == 1) { if (inp[j] % 10 == i) ans = ans + Convert.ToString(inp[j]) + ","; }
+                    else if(what == 10) { if (inp[j] % 100 / 10 == i) ans = ans + Convert.ToString(inp[j]) + ","; }
+                    else if (what == 100) { if (inp[j] / 100 == i) ans = ans + Convert.ToString(inp[j]) + ","; }
+                }
+                ans = ans.Remove(ans.Length - 1) + "} ,";
+                di = di + ans;
+                haveans = true;
+            }
+        }
+        if (haveans) di = di.Remove(di.Length - 2, 2);
+        Console.WriteLine("{0}{1}"di," }");
+    }
 }
